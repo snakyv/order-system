@@ -26,7 +26,6 @@ dependencies {
     implementation 'org.apache.poi:poi:5.2.3'
     implementation 'org.apache.poi:poi-ooxml:5.2.3'
     implementation 'com.itextpdf:itextpdf:5.5.13.2'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.webjars:bootstrap:5.3.2'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
