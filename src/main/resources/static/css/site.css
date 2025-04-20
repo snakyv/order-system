@@ -1,0 +1,25 @@
+/* site.css */
+
+/* отступ сверху, чтобы navbar не налезал */
+body {
+    padding-top: 70px;
+}
+
+/* общие стили для контейнера */
+.container {
+    margin-bottom: 50px;
+}
+
+/* стили для footer */
+footer {
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    text-align: center;
+    margin-top: 50px;
+    border-top: 1px solid #dee2e6;
+}
+
+/* тонкая настройка логотипа в navbar */
+.navbar-brand {
+    font-weight: bold;
+}
