@@ -5,10 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginController {
-
     @GetMapping("/login")
     public String login() {
-        // возвращаем /WEB-INF/views/login.jsp
-        return "login";
+        return "login";   // вернёт /WEB-INF/views/login.jsp
     }
 }
