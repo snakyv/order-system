@@ -17,13 +17,13 @@ public class CustomerController {
     @GetMapping
     public String listCustomers(Model model) {
         model.addAttribute("customers", customerRepository.findAll());
-        return "customer-list";
+        return "customer-list"; // Ensure that this matches your JSP page
     }
 
     @GetMapping("/new")
     public String showForm(Model model) {
-        model.addAttribute("customer", new Customer());
-        return "customer-form";
+        model.addAttribute("customer", new Customer()); // Pass an empty customer object
+        return "customer-form"; // This is the JSP where form is located
     }
 
     @PostMapping("/save")
@@ -37,7 +37,7 @@ public class CustomerController {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Клієнт не знайдений: " + id));
         model.addAttribute("customer", customer);
-        return "customer-form";
+        return "customer-form"; // Make sure you return correct form page
     }
 
     @GetMapping("/delete/{id}")
@@ -46,3 +46,4 @@ public class CustomerController {
         return "redirect:/customers";
     }
 }
+

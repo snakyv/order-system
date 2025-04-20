@@ -17,13 +17,13 @@ public class ProductController {
     @GetMapping
     public String listProducts(Model model) {
         model.addAttribute("products", productRepository.findAll());
-        return "product-list";
+        return "product-list"; // Ensure this matches your JSP page
     }
 
     @GetMapping("/new")
     public String showForm(Model model) {
-        model.addAttribute("product", new Product());
-        return "product-form";
+        model.addAttribute("product", new Product()); // Pass an empty product object
+        return "product-form"; // This is the JSP where the form is located
     }
 
     @PostMapping("/save")
@@ -34,9 +34,9 @@ public class ProductController {
 
     @GetMapping("/edit/{id}")
     public String editProduct(@PathVariable Long id, Model model) {
-        var product = productRepository.findById(id).orElseThrow();
+        Product product = productRepository.findById(id).orElseThrow();
         model.addAttribute("product", product);
-        return "product-form";
+        return "product-form"; // Correct page for editing
     }
 
     @GetMapping("/delete/{id}")
@@ -45,3 +45,6 @@ public class ProductController {
         return "redirect:/products";
     }
 }
+
+
+

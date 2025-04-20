@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 </div> <!-- /.container -->
 
 <!-- Bootstrap JS Bundle (Popper + JS) из WebJars -->
@@ -6,4 +7,3 @@
 ></script>
 </body>
 </html>
-

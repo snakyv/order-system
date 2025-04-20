@@ -1,3 +1,5 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+
 <c:forEach var="order" items="${orders}">
   <!-- Твої поля: id, дата, статус... -->
 
