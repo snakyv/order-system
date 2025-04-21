@@ -4,52 +4,51 @@ import com.shop.ordersystem.model.DeliveryStatus;
 import com.shop.ordersystem.model.Order;
 import com.shop.ordersystem.repository.DeliveryStatusRepository;
 import com.shop.ordersystem.repository.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/delivery-status")
+@RequiredArgsConstructor
 public class DeliveryStatusController {
 
-    @Autowired
-    private DeliveryStatusRepository deliveryStatusRepository;
+    private final DeliveryStatusRepository deliveryStatusRepository;
+    private final OrderRepository          orderRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
-
-    // Показываем список всех статусов
+    /** список всех статусов */
     @GetMapping
     public String listStatuses(Model model) {
         model.addAttribute("statuses", deliveryStatusRepository.findAll());
         return "delivery-status-list";
     }
 
-    // GET /delivery-status/new — форма создания нового статуса
+    /** форма создания */
     @GetMapping("/new")
     public String showNewForm(Model model) {
-        model.addAttribute("orders", orderRepository.findAll());
+        model.addAttribute("status",  new DeliveryStatus());
+        model.addAttribute("orders",  orderRepository.findAll());
         return "delivery-status-form";
     }
 
-    // GET /delivery-status/edit/{id} — форма редактирования
+    /** форма редактирования */
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        DeliveryStatus status = deliveryStatusRepository.findById(id)
+        var status = deliveryStatusRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Статус не знайдений: " + id));
-        model.addAttribute("status", status);
-        model.addAttribute("orders", orderRepository.findAll());
+        model.addAttribute("status",  status);
+        model.addAttribute("orders",  orderRepository.findAll());
         return "delivery-status-form";
     }
 
-    // Обработчик и для новых, и для правок
+    /** сохранение (и новое, и редактирование) */
     @PostMapping("/save")
     public String save(
-            @RequestParam("orderId") Long orderId,
-            @RequestParam("status") String statusText,
-            @RequestParam(value = "id", required = false) Long id  // скрытое поле формы
-    ) {
+            @RequestParam Long orderId,
+            @RequestParam String status,
+            @RequestParam(required = false) Long id) {
+
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Замовлення не знайдене: " + orderId));
 
@@ -58,9 +57,9 @@ public class DeliveryStatusController {
                 : new DeliveryStatus();
 
         ds.setOrder(order);
-        ds.setStatus(statusText);
-        deliveryStatusRepository.save(ds);
+        ds.setStatus(status);
 
+        deliveryStatusRepository.save(ds);
         return "redirect:/delivery-status";
     }
 }

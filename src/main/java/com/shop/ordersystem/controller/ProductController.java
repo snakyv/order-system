@@ -2,28 +2,28 @@ package com.shop.ordersystem.controller;
 
 import com.shop.ordersystem.model.Product;
 import com.shop.ordersystem.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductController {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     @GetMapping
     public String listProducts(Model model) {
         model.addAttribute("products", productRepository.findAll());
-        return "product-list"; // Ensure this matches your JSP page
+        return "product-list";
     }
 
     @GetMapping("/new")
     public String showForm(Model model) {
-        model.addAttribute("product", new Product()); // Pass an empty product object
-        return "product-form"; // This is the JSP where the form is located
+        model.addAttribute("product", new Product());
+        return "product-form";
     }
 
     @PostMapping("/save")
@@ -34,9 +34,10 @@ public class ProductController {
 
     @GetMapping("/edit/{id}")
     public String editProduct(@PathVariable Long id, Model model) {
-        Product product = productRepository.findById(id).orElseThrow();
+        var product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Товар не знайдений: " + id));
         model.addAttribute("product", product);
-        return "product-form"; // Correct page for editing
+        return "product-form";
     }
 
     @GetMapping("/delete/{id}")
@@ -45,6 +46,3 @@ public class ProductController {
         return "redirect:/products";
     }
 }
-
-
-

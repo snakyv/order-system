@@ -14,6 +14,7 @@ public class MyErrorController implements ErrorController {
     public String handleError(HttpServletRequest request, Model model) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         model.addAttribute("statusCode", status);
-        return "error"; // Перенаправляем на страницу с ошибкой
+        return "error";
     }
 }
+

@@ -10,13 +10,13 @@ import lombok.*;
 @AllArgsConstructor
 public class DeliveryStatus {
 
+    /* id таблицы = id заказа */
     @Id
-    @Column(name = "order_id", columnDefinition = "BIGINT")
-    private Long id;
+    private Long id;    // Hibernate сам возьмёт тип колонки из PK orders
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @MapsId
-    @JoinColumn(name = "order_id", columnDefinition = "BIGINT", nullable = false)
+    @MapsId                                    // ← связываем PK = FK
+    @JoinColumn(name = "order_id", nullable = false)
     @ToString.Exclude @EqualsAndHashCode.Exclude
     private Order order;
 

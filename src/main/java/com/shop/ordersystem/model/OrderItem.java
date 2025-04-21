@@ -3,6 +3,8 @@ package com.shop.ordersystem.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "order_items")
 @Data
@@ -14,21 +16,25 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // чтобы тип совпадал с orders.id (BIGINT)
+    /* -------- связи -------- */
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "order_id", columnDefinition = "BIGINT", nullable = false)
+    @JoinColumn(name = "order_id", nullable = false)
     @ToString.Exclude @EqualsAndHashCode.Exclude
     private Order order;
 
-    // а здесь тоже лучше явно BIGINT
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", columnDefinition = "BIGINT", nullable = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    @ToString.Exclude @EqualsAndHashCode.Exclude
     private Product product;
+
+    /* -------- данные -------- */
 
     @Column(nullable = false)
     private Integer quantity;
 
-    public Double getSubtotal() {
-        return product.getPrice() * quantity;
+    public BigDecimal getSubtotal() {           // BigDecimal × int
+        return product.getPrice()
+                .multiply(BigDecimal.valueOf(quantity));
     }
 }

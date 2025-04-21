@@ -1,34 +1,47 @@
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<%@ include file="/WEB-INF/views/fragments/head.jsp" %>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <jsp:include page="/WEB-INF/views/fragments/head.jsp"/>
+</head>
 
-<h2>Форма товару</h2>
+<body>
+<jsp:include page="/WEB-INF/views/includes/navbar.jsp"/>
 
-<form:form method="post" modelAttribute="product" action="${pageContext.request.contextPath}/products/save">
-  <table class="table">
-    <tr>
-      <td>Назва:</td>
-      <td><form:input path="name" cssClass="form-control"/></td>
-    </tr>
-    <tr>
-      <td>Опис:</td>
-      <td><form:input path="description" cssClass="form-control"/></td>
-    </tr>
-    <tr>
-      <td>Ціна:</td>
-      <td><form:input path="price" cssClass="form-control"/></td>
-    </tr>
-    <tr>
-      <td>Кількість:</td>
-      <td><form:input path="quantity" cssClass="form-control"/></td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <button type="submit" class="btn btn-primary">Зберегти</button>
-      </td>
-    </tr>
-  </table>
-</form:form>
+<div class="container mt-4">
+  <h2>Форма товару</h2>
 
-<%@ include file="/WEB-INF/views/fragments/footer.jsp" %>
+  <form:form method="post"
+             modelAttribute="product"
+             action="${pageContext.request.contextPath}/products/save">
+
+    <div class="mb-3">
+      <label class="form-label">Назва</label>
+      <form:input path="name" cssClass="form-control"/>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Опис</label>
+      <form:textarea path="description" cssClass="form-control"/>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Ціна</label>
+      <form:input path="price" cssClass="form-control"/>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Кількість</label>
+      <form:input path="quantity" cssClass="form-control"/>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Зберегти</button>
+    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/products">Скасувати</a>
+  </form:form>
+</div>
+
+<jsp:include page="/WEB-INF/views/fragments/footer.jsp"/>
+</body>
+</html>
